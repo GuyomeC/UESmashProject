@@ -9,6 +9,7 @@
 class USmashCharacterStateMachine;
 class ASmashCharacter;
 class USmashCharacterState;
+enum class ESmashCharacterStateID : uint8;
 
 /**
  * 
@@ -23,11 +24,22 @@ public:
 
 	ASmashCharacter* GetCharacter() const;
 
+	UFUNCTION(BlueprintCallable)
+	void ChangeState(ESmashCharacterStateID NextStateID);
+
+	USmashCharacterState* GetState(ESmashCharacterStateID StateID);
+
 protected:
 	UPROPERTY()
 	TObjectPtr<ASmashCharacter> Character;
 
 	TArray<USmashCharacterState*> AllState;
+
+	UPROPERTY(BlueprintReadOnly)
+	ESmashCharacterStateID CurrentStateID;
+
+	UPROPERTY()
+	TObjectPtr<USmashCharacterState> CurrentState;
 
 	void FindStates();
 
