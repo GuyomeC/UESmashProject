@@ -15,18 +15,14 @@ class SMASHUE_API ASmashCharacter : public ACharacter
 
 #pragma region Unreal Default
 public:
-	// Sets default values for this character's properties
 	ASmashCharacter();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 #pragma endregion Unreal Default
 
@@ -52,8 +48,10 @@ public:
 
 	void InitStateMachine();
 
+	void TickStateMachine(float DeltaTime) const;
+
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="State Machine")
+	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<USmashCharacterStateMachine> StateMachine;
 
 #pragma endregion State Machine
