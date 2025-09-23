@@ -1,36 +1,35 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/State/SmashCharacterStateWalk.h"
+#include "Character/State/SmashCharacterStateRun.h"
 
 #include "Character/SmashCharacter.h"
 #include "Character/SmashCharacterStateID.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-
-USmashCharacterStateWalk::USmashCharacterStateWalk()
+USmashCharacterStateRun::USmashCharacterStateRun()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void USmashCharacterStateWalk::BeginPlay()
+void USmashCharacterStateRun::BeginPlay()
 {
 	Super::BeginPlay();
-	MoveSpeedMax = 200.f;
+	MoveSpeedMax = 600.f;
 }
 
-void USmashCharacterStateWalk::TickComponent(float DeltaTime, ELevelTick TickType,
-                                             FActorComponentTickFunction* ThisTickFunction)
+void USmashCharacterStateRun::TickComponent(float DeltaTime, ELevelTick TickType,
+                                            FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-ESmashCharacterStateID USmashCharacterStateWalk::GetStateID()
+ESmashCharacterStateID USmashCharacterStateRun::GetStateID()
 {
-	return ESmashCharacterStateID::Walk;
+	return ESmashCharacterStateID::Run;
 }
 
-void USmashCharacterStateWalk::StateEnter(ESmashCharacterStateID PreviousStateID)
+void USmashCharacterStateRun::StateEnter(ESmashCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
 
@@ -38,14 +37,14 @@ void USmashCharacterStateWalk::StateEnter(ESmashCharacterStateID PreviousStateID
 		-1,
 		3.f,
 		FColor::Cyan,
-		TEXT("Enter StateWalk"));
+		TEXT("Enter StateRun"));
 
 	Character->GetCharacterMovement()->MaxWalkSpeed = MoveSpeedMax;
 
-	Character->PlayAnimMontage(AnimWalk);
+	Character->PlayAnimMontage(AnimRun);
 }
 
-void USmashCharacterStateWalk::StateExit(ESmashCharacterStateID NextStateID)
+void USmashCharacterStateRun::StateExit(ESmashCharacterStateID NextStateID)
 {
 	Super::StateEnter(NextStateID);
 
@@ -53,21 +52,21 @@ void USmashCharacterStateWalk::StateExit(ESmashCharacterStateID NextStateID)
 		-1,
 		3.f,
 		FColor::Red,
-		TEXT("Exit StateWalk"));
+		TEXT("Exit StateRun"));
 }
 
-void USmashCharacterStateWalk::StateTick(float DeltaTime)
+void USmashCharacterStateRun::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
 		FColor::Green,
-		TEXT("Tick StateWalk"));
+		TEXT("Tick StateRun"));
 	MoveForward(Character->GetOrientX());
 }
 
-void USmashCharacterStateWalk::MoveForward(float Value)
+void USmashCharacterStateRun::MoveForward(float Value)
 {
 	FVector MoveDirection = FVector(1.f, 0.f, 0.f);
 	Character->AddMovementInput(MoveDirection, Value);

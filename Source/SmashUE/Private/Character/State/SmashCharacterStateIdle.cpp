@@ -43,7 +43,7 @@ void USmashCharacterStateIdle::StateEnter(ESmashCharacterStateID PreviousStateID
 	// ACTIVER L ANIMATION D IDLE
 	//
 
-	Character->PlayAnimMontage();
+	Character->PlayAnimMontage(AnimIdle);
 }
 
 void USmashCharacterStateIdle::StateExit(ESmashCharacterStateID NextStateID)

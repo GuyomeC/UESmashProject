@@ -27,6 +27,9 @@ protected:
 	
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	class UAnimMontage* AnimIdle;
+
 public:
 	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,

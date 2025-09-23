@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Character/SmashCharacterState.h"
-#include "SmashCharacterStateWalk.generated.h"
+#include "SmashCharacterStateRun.generated.h"
 
 
 UCLASS(ClassGroup=(SmashCharacterState), meta=(BlueprintSpawnableComponent))
-class SMASHUE_API USmashCharacterStateWalk : public USmashCharacterState
+class SMASHUE_API USmashCharacterStateRun : public USmashCharacterState
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	USmashCharacterStateWalk();
+	USmashCharacterStateRun();
 	virtual ESmashCharacterStateID GetStateID() override;
 
 	virtual void StateEnter(ESmashCharacterStateID PreviousStateID) override;
@@ -30,7 +30,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
-	class UAnimMontage* AnimWalk;
+	class UAnimMontage* AnimRun;
 	
 	UPROPERTY(EditAnywhere)
 	float MoveSpeedMax;
