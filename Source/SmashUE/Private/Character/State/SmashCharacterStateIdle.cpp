@@ -5,6 +5,7 @@
 
 #include "Character/SmashCharacter.h"
 #include "Character/SmashCharacterStateID.h"
+#include "Character/SmashCharacterStateMachine.h"
 
 
 USmashCharacterStateIdle::USmashCharacterStateIdle()
@@ -39,10 +40,6 @@ void USmashCharacterStateIdle::StateEnter(ESmashCharacterStateID PreviousStateID
 		FColor::Cyan,
 		TEXT("Enter StateIdle"));
 
-	//
-	// ACTIVER L ANIMATION D IDLE
-	//
-
 	Character->PlayAnimMontage(AnimIdle);
 }
 
@@ -55,10 +52,6 @@ void USmashCharacterStateIdle::StateExit(ESmashCharacterStateID NextStateID)
 		3.f,
 		FColor::Red,
 		TEXT("Exit StateIdle"));
-
-	//
-	// DESACTIVER L ANIMATION D IDLE
-	//
 }
 
 void USmashCharacterStateIdle::StateTick(float DeltaTime)
@@ -69,4 +62,9 @@ void USmashCharacterStateIdle::StateTick(float DeltaTime)
 		0.1f,
 		FColor::Green,
 		TEXT("Tick StateIdle"));
+
+	if (FMath::Abs(Character->GetInputMoveX()) > 0.1f)
+	{
+		StateMachine->ChangeState(ESmashCharacterStateID::Walk);
+	}
 }
