@@ -24,6 +24,9 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 	virtual void MoveForward(float Value);
+	
+	UFUNCTION()
+	void OnInputMoveXFast(float CharaInputMoveX);
 
 protected:
 	// Called when the game starts

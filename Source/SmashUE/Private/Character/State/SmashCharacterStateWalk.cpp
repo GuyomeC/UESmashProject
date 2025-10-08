@@ -35,26 +35,20 @@ void USmashCharacterStateWalk::StateEnter(ESmashCharacterStateID PreviousStateID
 {
 	Super::StateEnter(PreviousStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Cyan,
-		TEXT("Enter StateWalk"));
-
 	Character->GetCharacterMovement()->MaxWalkSpeed = MoveSpeedMax;
 
 	Character->PlayAnimMontage(AnimWalk);
+
+	Character->InputMoveXFastEvent.AddDynamic(this, &USmashCharacterStateWalk::OnInputMoveXFast);
+	
 }
 
 void USmashCharacterStateWalk::StateExit(ESmashCharacterStateID NextStateID)
 {
 	Super::StateEnter(NextStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		TEXT("Exit StateWalk"));
+	Character->InputMoveXFastEvent.AddDynamic(this, &USmashCharacterStateWalk::OnInputMoveXFast);
+
 }
 
 void USmashCharacterStateWalk::StateTick(float DeltaTime)
@@ -67,7 +61,7 @@ void USmashCharacterStateWalk::StateTick(float DeltaTime)
 		TEXT("Tick StateWalk"));
 	MoveForward(Character->GetOrientX());
 
-	if (FMath::Abs(Character->GetInputMoveX()) < 0.1f)
+	if (FMath::Abs(Character->GetInputMoveX()) < InputMoveX)
 	{
 		StateMachine->ChangeState(ESmashCharacterStateID::Idle);
 	}
@@ -82,4 +76,9 @@ void USmashCharacterStateWalk::MoveForward(float Value)
 {
 	FVector MoveDirection = FVector(1.f, 0.f, 0.f);
 	Character->AddMovementInput(MoveDirection, Value);
+}
+
+void USmashCharacterStateWalk::OnInputMoveXFast(float CharaInputMoveX)
+{
+	StateMachine->ChangeState(ESmashCharacterStateID::Run);
 }

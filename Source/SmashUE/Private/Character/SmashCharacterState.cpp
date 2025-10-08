@@ -3,6 +3,7 @@
 
 #include "SmashCharacterState.h"
 
+#include "Character/SmashCharacterSettings.h"
 #include "Character/SmashCharacterStateID.h"
 #include "Character/SmashCharacterStateMachine.h"
 
@@ -28,6 +29,9 @@ void USmashCharacterState::StateInit(USmashCharacterStateMachine* InStateMachine
 		FColor::Red,
 		FString::Printf(TEXT("Init State %d"), GetStateID())
 		);
+
+	Settings = GetDefault<USmashCharacterSettings>();
+	InputMoveX = Settings->InputMoveXThreshold;
 }
 
 void USmashCharacterState::StateEnter(ESmashCharacterStateID PreviousStateID)
@@ -44,3 +48,4 @@ void USmashCharacterState::StateTick(float DeltaTime)
 {
 	
 }
+

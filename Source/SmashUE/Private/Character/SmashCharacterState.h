@@ -1,5 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
+﻿
 #pragma once
 
 #include "CoreMinimal.h"
@@ -9,6 +8,7 @@
 
 class ASmashCharacter;
 class USmashCharacterStateMachine;
+class USmashCharacterSettings;
 
 UCLASS(Abstract)
 class SMASHUE_API USmashCharacterState : public UActorComponent
@@ -28,12 +28,18 @@ public:
 	virtual void StateExit(ESmashCharacterStateID NextStateID);
 
 	virtual void StateTick(float DeltaTime);
-
+	
 protected:
 	UPROPERTY()
 	TObjectPtr<ASmashCharacter> Character;
 
 	UPROPERTY()
 	TObjectPtr<USmashCharacterStateMachine> StateMachine;
+	
+	UPROPERTY()
+	const USmashCharacterSettings* Settings;
+
+	UPROPERTY()
+	float InputMoveX;
 
 };

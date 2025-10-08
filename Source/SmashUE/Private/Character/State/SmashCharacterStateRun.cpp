@@ -5,6 +5,7 @@
 
 #include "Character/SmashCharacter.h"
 #include "Character/SmashCharacterStateID.h"
+#include "Character/SmashCharacterStateMachine.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 USmashCharacterStateRun::USmashCharacterStateRun()
@@ -58,11 +59,16 @@ void USmashCharacterStateRun::StateExit(ESmashCharacterStateID NextStateID)
 void USmashCharacterStateRun::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Green,
-		TEXT("Tick StateRun"));
+	
+	if (FMath::Abs(Character->GetInputMoveX()) < Settings->InputMoveXThreshold)
+	{
+		StateMachine->ChangeState(ESmashCharacterStateID::Idle);
+	}
+	else
+	{
+		Character->SetOrientX(Character->GetInputMoveX());
+		Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
+	}
 	MoveForward(Character->GetOrientX());
 }
 
